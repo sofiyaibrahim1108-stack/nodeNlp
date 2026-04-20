@@ -1,43 +1,25 @@
-const express = require('express');
+const { NlpManager } = require('node-nlp');
 const loadModel = require('./load');
-
-const app = express();
-app.use(express.json());
 
 let manager;
 
-// Load model once
-(async () => {
-    manager = await loadModel();
-})();
-
-// API endpoint
-app.post('/predict', async (req, res) => {
-    try {
-        if (!manager) {
-            return res.status(503).json({ error: 'Model not loaded yet' });
-        }
-
-        const input = req.body.text;
-
-        if (!input) {
-            return res.status(400).json({ error: 'Text is required' });
-        }
-
-        const result = await manager.process('en', input);
-
-        res.json({
-            intent: result.intent,
-            score: result.score
-        });
-
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ error: 'Something went wrong' });
+// This function initializes the model only when needed
+const getManager = async () => {
+    if (!manager) {
+        manager = await loadModel();
     }
-});
+    return manager;
+};
 
-// Start server
-app.listen(5000, () => {
-    console.log('🚀 Server running at http://localhost:5000');
-});
+// Export this function so other apps can use it
+async function predict(text) {
+    const nlpManager = await getManager();
+    const result = await nlpManager.process('en', text);
+    return {
+        intent: result.intent,
+        score: result.score,
+        answer: result.answer // If you have answers trained
+    };
+}
+
+module.exports = { predict };
