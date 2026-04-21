@@ -12,6 +12,7 @@
   "type": "commonjs",
   "dependencies": {
     "@nlpjs/nlp": "^5.0.0-alpha.5",
+    "ai-model": "github:sofiyaibrahim1108-stack/nodeNlp",
     "express": "^5.2.1",
     "node-nlp": "^5.0.0-alpha.5"
   }
