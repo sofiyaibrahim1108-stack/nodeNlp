@@ -9,6 +9,8 @@ async function loadModel() {
     if (fs.existsSync(modelPath)) {
         try {
             const data = fs.readFileSync(modelPath, 'utf8');
+            if (!data || data.trim() === "") throw new Error("File is empty");
+            
             const modelData = JSON.parse(data);
             await manager.import(modelData); 
             console.log("✅ AI Model loaded successfully");
@@ -25,12 +27,13 @@ async function loadModel() {
 }
 
 async function trainFresh(manager, modelPath) {
-    // Add basic documents just in case model is missing
+    // Basic training to ensure the manager isn't empty
     manager.addDocument('en', 'generate an image of %text%', 'image_model');
     manager.addDocument('en', 'draw a %text%', 'image_model');
+    manager.addDocument('en', 'hi', 'chat_model');
+    manager.addDocument('en', 'hello', 'chat_model');
     
     await manager.train();
-    // Use JSON.stringify for cleaner save if needed, but manager.save handles it
     manager.save(modelPath);
     console.log("✅ Fresh model trained and saved.");
 }

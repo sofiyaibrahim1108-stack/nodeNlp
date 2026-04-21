@@ -11,18 +11,22 @@ const getManager = async () => {
 };
 
 async function predict(text) {
-    console.log("🧠 NLP Processing prompt:", text); // Node terminal log
-    const nlpManager = await getManager();
-    const result = await nlpManager.process('en', text);
-    
-    console.log(`🎯 NLP Result -> Intent: ${result.intent}, Score: ${result.score}`);
-    
-    return {
-        intent: result.intent,
-        score: result.score,
-        answer: result.answer 
-    };
+    console.log("🧠 NLP Processing prompt:", text);
+    try {
+        const nlpManager = await getManager();
+        const result = await nlpManager.process('en', text);
+        
+        console.log(`🎯 NLP Result -> Intent: ${result.intent}, Score: ${result.score}`);
+        
+        return {
+            intent: result.intent || "None",
+            score: result.score || 0,
+            answer: result.answer || ""
+        };
+    } catch (error) {
+        console.error("❌ Prediction Error:", error.message);
+        return { intent: "None", score: 0 };
+    }
 }
 
-// Don't change this if your package.json uses CommonJS
 module.exports = { predict };
