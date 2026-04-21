@@ -4,7 +4,7 @@ async function run() {
     const manager = await loadModel();
 
     // ✅ DEFINE INPUT
-    const input = "generate an image of a car";
+    const input = "generate an image of a bike";
 
     const result = await manager.process('en', input);
 
