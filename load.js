@@ -37,4 +37,8 @@ async function trainFresh(manager, modelPath) {
     console.log("✅ Fresh model trained and saved.");
 }
 
+<<<<<<< HEAD
 module.exports = loadModel;
+=======
+module.exports = loadModel;
+>>>>>>> f8e86ec9ba8588b567a5ed8e2c4729f8cf780940
