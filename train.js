@@ -18,6 +18,7 @@ async function trainModel() {
         'I want an image of %object%',
         'show me a photo of %object%',
         'build an illustration of %object%',
+        'vanakam',
         'visualize %object%'
     ];
 
