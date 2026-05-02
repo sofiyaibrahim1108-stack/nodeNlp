@@ -2,7 +2,7 @@ const { NlpManager } = require('node-nlp');
 const fs = require('fs');
 
 async function trainModel() {
-    const manager = new NlpManager({ languages: ['en'] });
+    const manager = new NlpManager({ languages: ['en','ta'] });
 
     // =========================
     // 🎨 IMAGE MODEL
@@ -39,7 +39,8 @@ async function trainModel() {
         'what is %object%',
         'explain %object%',
         'define %object%',
-        'describe %object%'
+        'describe %object%',
+        'oru kadhai sollu'
     ];
 
     textPhrases.forEach(p => manager.addDocument('en', p, 'text_model'));
